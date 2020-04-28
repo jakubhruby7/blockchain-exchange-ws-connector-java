@@ -1,0 +1,219 @@
+package decoders;
+
+import model.OrderType;
+import model.Side;
+import model.TimeInForce;
+import model.events.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class EventDecoderTest {
+
+    final EventDecoder decoder = new EventDecoder();
+
+    @Test
+    void decodeSubscribedHeartbeat() {
+        Event event = decoder.decode(EventExamples.subscribedHeartbeat());
+        assertEquals(Subscribed.class, event.getClass());
+
+        Subscribed subscribed = (Subscribed) event;
+        assertEquals("heartbeat", subscribed.getChannel());
+        assertEquals("subscribed", subscribed.getEvent());
+    }
+
+    @Test
+    void decodeSubscribedL2() {
+        Event event = decoder.decode(EventExamples.subsribedL2());
+        assertEquals(SubscribedL2.class, event.getClass());
+
+        SubscribedL2 subscribed = (SubscribedL2) event;
+        assertEquals("l2", subscribed.getChannel());
+        assertEquals("subscribed", subscribed.getEvent());
+        assertEquals("BTC-USD", subscribed.getSymbol());
+    }
+
+    @Test
+    void decodeSubscribedPrices() {
+        Event event = decoder.decode(EventExamples.subscribedPrices());
+        assertEquals(SubscribedPrices.class, event.getClass());
+
+        SubscribedPrices subscribed = (SubscribedPrices) event;
+        assertEquals("prices", subscribed.getChannel());
+        assertEquals("subscribed", subscribed.getEvent());
+        assertEquals("BTC-USD", subscribed.getSymbol());
+    }
+
+    @Test
+    void decodeUpdatedHeartbeat() {
+        Event event = decoder.decode(EventExamples.updatedHeartbeat());
+        assertEquals(Heartbeat.class, event.getClass());
+
+        Heartbeat heartbeat = (Heartbeat) event;
+        assertEquals("heartbeat", heartbeat.getChannel());
+        assertEquals("updated", heartbeat.getEvent());
+        assertEquals("2019-05-31T08:36:45.666753Z", heartbeat.getTimestamp());
+    }
+
+    @Test
+    void decodeSnapshotL2() {
+        Event event = decoder.decode(EventExamples.snapshotL2());
+        assertEquals(L2Snapshot.class, event.getClass());
+
+        L2Snapshot l2Snapshot = (L2Snapshot) event;
+        assertEquals("l2", l2Snapshot.getChannel());
+        assertEquals("snapshot", l2Snapshot.getEvent());
+        assertEquals("BTC-USD", l2Snapshot.getSymbol());
+
+        assertEquals(2, l2Snapshot.getBids().length);
+        assertEquals(2, l2Snapshot.getAsks().length);
+
+        assertEquals(2, l2Snapshot.getBids()[0].getNum());
+        assertEquals(8723.45, l2Snapshot.getBids()[0].getPrice());
+        assertEquals(1.45, l2Snapshot.getBids()[0].getQuantity());
+
+        assertEquals(1, l2Snapshot.getBids()[1].getNum());
+        assertEquals(8124.45, l2Snapshot.getBids()[1].getPrice());
+        assertEquals(123.45, l2Snapshot.getBids()[1].getQuantity());
+
+        assertEquals(2, l2Snapshot.getAsks()[0].getNum());
+        assertEquals(8730.0, l2Snapshot.getAsks()[0].getPrice());
+        assertEquals(1.55, l2Snapshot.getAsks()[0].getQuantity());
+
+        assertEquals(2, l2Snapshot.getAsks()[1].getNum());
+        assertEquals(8904.45, l2Snapshot.getAsks()[1].getPrice());
+        assertEquals(13.66, l2Snapshot.getAsks()[1].getQuantity());
+    }
+
+    @Test
+    void decodeUpdatedL2() {
+        Event event = decoder.decode(EventExamples.updatedL2());
+        assertEquals(L2Update.class, event.getClass());
+
+        L2Update l2Update = (L2Update) event;
+        assertEquals("l2", l2Update.getChannel());
+        assertEquals("updated", l2Update.getEvent());
+        assertEquals("BTC-USD", l2Update.getSymbol());
+        assertEquals(1, l2Update.getBids().length);
+        assertEquals(0, l2Update.getAsks().length);
+
+        assertEquals(1, l2Update.getBids()[0].getNum());
+        assertEquals(8723.45, l2Update.getBids()[0].getPrice());
+        assertEquals(1.1, l2Update.getBids()[0].getQuantity());
+    }
+
+    @Test
+    void decodeSnapshotL3() {
+        Event event = decoder.decode(EventExamples.snapshotL3());
+        assertEquals(L3Snapshot.class, event.getClass());
+
+        L3Snapshot l3Snapshot = (L3Snapshot) event;
+        assertEquals("l3", l3Snapshot.getChannel());
+        assertEquals("snapshot", l3Snapshot.getEvent());
+        assertEquals("BTC-USD", l3Snapshot.getSymbol());
+        assertEquals(3, l3Snapshot.getBids().length);
+        assertEquals(4, l3Snapshot.getAsks().length);
+
+        assertEquals("1234", l3Snapshot.getBids()[0].getId());
+        assertEquals(8723.45, l3Snapshot.getBids()[0].getPrice());
+        assertEquals(1.1, l3Snapshot.getBids()[0].getQuantity());
+
+        assertEquals("1235", l3Snapshot.getBids()[1].getId());
+        assertEquals(8723.45, l3Snapshot.getBids()[1].getPrice());
+        assertEquals(0.35, l3Snapshot.getBids()[1].getQuantity());
+
+        assertEquals("234", l3Snapshot.getBids()[2].getId());
+        assertEquals(8124.45, l3Snapshot.getBids()[2].getPrice());
+        assertEquals(123.45, l3Snapshot.getBids()[2].getQuantity());
+
+        assertEquals("2222", l3Snapshot.getAsks()[0].getId());
+        assertEquals(8730.0, l3Snapshot.getAsks()[0].getPrice());
+        assertEquals(0.65, l3Snapshot.getAsks()[0].getQuantity());
+
+        assertEquals("2225", l3Snapshot.getAsks()[1].getId());
+        assertEquals(8730.0, l3Snapshot.getAsks()[1].getPrice());
+        assertEquals(0.9, l3Snapshot.getAsks()[1].getQuantity());
+
+        assertEquals("2343", l3Snapshot.getAsks()[2].getId());
+        assertEquals(8904.45, l3Snapshot.getAsks()[2].getPrice());
+        assertEquals(8.66, l3Snapshot.getAsks()[2].getQuantity());
+
+        assertEquals("2353", l3Snapshot.getAsks()[3].getId());
+        assertEquals(8904.45, l3Snapshot.getAsks()[3].getPrice());
+        assertEquals(5.0, l3Snapshot.getAsks()[3].getQuantity());
+    }
+
+    @Test
+    void decodeUpdatedL3() {
+        Event event = decoder.decode(EventExamples.updatedL3());
+        assertEquals(L3Update.class, event.getClass());
+
+        L3Update l3Update = (L3Update) event;
+        assertEquals("l3", l3Update.getChannel());
+        assertEquals("updated", l3Update.getEvent());
+        assertEquals("BTC-USD", l3Update.getSymbol());
+        assertEquals(0, l3Update.getAsks().length);
+        assertEquals(1, l3Update.getBids().length);
+        assertEquals("1234", l3Update.getBids()[0].getId());
+        assertEquals(8723.45, l3Update.getBids()[0].getPrice());
+        assertEquals(0, l3Update.getBids()[0].getQuantity());
+    }
+
+    @Test
+    void decodeUpdatedPrices() {
+        Event event = decoder.decode(EventExamples.updatedPrices());
+        assertEquals(PricesUpdate.class, event.getClass());
+
+        PricesUpdate pricesUpdate = (PricesUpdate) event;
+        assertEquals("prices", pricesUpdate.getChannel());
+        assertEquals("updated", pricesUpdate.getEvent());
+        assertEquals(1559039640, pricesUpdate.getPrice()[0]);
+        assertEquals(8697.24, pricesUpdate.getPrice()[1]);
+        assertEquals(8700.98, pricesUpdate.getPrice()[2]);
+        assertEquals(8697.27, pricesUpdate.getPrice()[3]);
+        assertEquals(8700.98, pricesUpdate.getPrice()[4]);
+        assertEquals(0.431, pricesUpdate.getPrice()[5]);
+    }
+
+    @Test
+    void decodeSnapshotTrading() {
+        Event event = decoder.decode(EventExamples.snapshotTrading());
+        assertEquals(TradingSnapshot.class, event.getClass());
+
+        TradingSnapshot tradingSnapshot = (TradingSnapshot) event;
+        assertEquals("trading", tradingSnapshot.getChannel());
+        assertEquals("snapshot", tradingSnapshot.getEvent());
+        assertEquals("12891851020", tradingSnapshot.getOrders()[0].getOrderId());
+        assertEquals("78502a08-c8f1-4eff-b", tradingSnapshot.getOrders()[0].getClientOrderId());
+        assertEquals("BTC-USD", tradingSnapshot.getOrders()[0].getSymbol());
+        assertEquals(Side.SELL, tradingSnapshot.getOrders()[0].getSide());
+        assertEquals(OrderType.LIMIT, tradingSnapshot.getOrders()[0].getOrderType());
+        assertEquals(5.0e-4, tradingSnapshot.getOrders()[0].getOrderQty());
+        assertEquals(5.0e-4, tradingSnapshot.getOrders()[0].getLeavesQty());
+        assertEquals(0.0, tradingSnapshot.getOrders()[0].getCumQty());
+        assertEquals(0.0, tradingSnapshot.getOrders()[0].getAvgPx());
+        assertEquals("open", tradingSnapshot.getOrders()[0].getOrdStatus());
+        assertEquals(TimeInForce.GTC, tradingSnapshot.getOrders()[0].getTimeInForce());
+        assertEquals("New order", tradingSnapshot.getOrders()[0].getText());
+        assertEquals("0", tradingSnapshot.getOrders()[0].getExecType());
+        assertEquals("11321871", tradingSnapshot.getOrders()[0].getExecId());
+        assertEquals("2019-08-13T11:30:03.000593290Z", tradingSnapshot.getOrders()[0].getTransactTime());
+        assertEquals(8, tradingSnapshot.getOrders()[0].getMsgType());
+        assertEquals(0.0, tradingSnapshot.getOrders()[0].getLastPx());
+        assertEquals(0.0, tradingSnapshot.getOrders()[0].getLastShares());
+        assertEquals("0", tradingSnapshot.getOrders()[0].getTradeId());
+        assertEquals(15000.0, tradingSnapshot.getOrders()[0].getPrice());
+    }
+
+    @Test
+    void decodeUpdateTrading() {
+        Event event = decoder.decode(EventExamples.updateTrading());
+        assertEquals(TradingUpdate.class, event.getClass());
+
+        TradingUpdate tradingUpdate = (TradingUpdate) event;
+        assertEquals("trading", tradingUpdate.getChannel());
+        assertEquals("updated", tradingUpdate.getEvent());
+        assertEquals("999999878", tradingUpdate.getOrderId());
+        assertEquals("Client ID 3", tradingUpdate.getClientOrderId());
+    }
+}
