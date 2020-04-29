@@ -12,7 +12,7 @@ public class CancelAction extends Action {
     public CancelAction(String orderId) {
         this.orderId = orderId;
         this.action = ActionType.CANCEL_ORDER_REQUEST;
-        this.channel = Channel.TRADING;
+        this.channel = Channel.TRADING.name();
     }
 
     @Override
