@@ -1,24 +1,11 @@
 package model.actions;
 
+import model.Channel;
+
 public class Subscribe extends Action {
-    private String symbol;
-    private int granularity;
 
-    public Subscribe(String action, String channel) {
-        this.action = action;
+    public Subscribe(Channel channel) {
+        this.action = ActionType.SUBSCRIBE;
         this.channel = channel;
-    }
-
-    public Subscribe(String action, String channel, String symbol) {
-        this.action = action;
-        this.channel = channel;
-        this.symbol = symbol;
-    }
-
-    public Subscribe(String action, String channel, String symbol, int granularity) {
-        this.action = action;
-        this.channel = channel;
-        this.symbol = symbol;
-        this.granularity = granularity;
     }
 }

@@ -1,6 +1,12 @@
 package model.actions;
 
-class ActionType {
-    public static String NEW_ORDER_SINGLE = "NewOrderSingle";
-    public static String CANCEL_ORDER_REQUEST = "CancelOrderRequest";
+import com.google.gson.annotations.SerializedName;
+
+enum ActionType {
+    @SerializedName("subscribe")
+    SUBSCRIBE,
+    @SerializedName("NewOrderSingle")
+    NEW_ORDER_SINGLE,
+    @SerializedName("CancelOrderRequest")
+    CANCEL_ORDER_REQUEST;
 }

@@ -14,18 +14,18 @@ public class ActionEncoder implements Encoder.Text<Action> {
 
     @Override
     public String encode(Action object) {
-        String json = JsonUtils.toJson(object);
+        final String json = JsonUtils.toJson(object);
         logger.info("action: " + json);
-        return JsonUtils.toJson(object);
+        return json;
     }
 
     @Override
     public void init(EndpointConfig config) {
-        logger.info("ActionEncoder - init method called");
+        logger.debug("ActionEncoder - init method called");
     }
 
     @Override
     public void destroy() {
-        logger.info("ActionEncoder - destroy method called");
+        logger.debug("ActionEncoder - destroy method called");
     }
 }

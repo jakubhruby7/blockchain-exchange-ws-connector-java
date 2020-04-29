@@ -62,6 +62,7 @@ public class EventDecoder implements Decoder.Text<Event> {
             }
         } else if (event == EventName.REJECTED) {
             //TODO handle rejected
+            logger.info("rejected: " + s);
         } else if (event == EventName.SNAPSHOT) {
             if (channel == Channel.L2) {
                 return fromJson(message, L2Snapshot.class);

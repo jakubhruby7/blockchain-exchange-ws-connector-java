@@ -16,6 +16,7 @@ dependencies {
     compile group: 'org.eclipse.jetty.websocket', name: 'javax-websocket-client-impl', version: '9.4.28.v20200408'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    runtime group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.26'
 
     // Test libs
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.2.0'

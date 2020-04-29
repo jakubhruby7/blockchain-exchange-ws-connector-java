@@ -33,7 +33,7 @@ public class OrderAction extends Action {
             boolean addLiquidityOnly
     ) {
         this.action = ActionType.NEW_ORDER_SINGLE;
-        this.channel = Channel.TRADING.name();
+        this.channel = Channel.TRADING;
         this.clientOrderId = clientOrderId;
         this.symbol = symbol;
         this.orderType = orderType;

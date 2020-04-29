@@ -1,6 +1,8 @@
 package model.actions;
 
+import model.Channel;
+
 public class Action {
-    protected String action;
-    protected String channel;
+    protected ActionType action;
+    protected Channel channel;
 }

@@ -3,14 +3,13 @@ package client;
 import config.ClientConfig;
 import decoders.EventDecoder;
 import encoders.ActionEncoder;
-import encoders.OrderEncoder;
-import encoders.SubscriptionEncoder;
 import handlers.Handler;
 import handlers.OrderUpdateHandler;
-import model.*;
-import model.actions.CancelAction;
-import model.actions.OrderAction;
-import model.actions.Subscribe;
+import model.Channel;
+import model.OrderType;
+import model.Side;
+import model.TimeInForce;
+import model.actions.*;
 import model.events.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +39,6 @@ public class BcxClient implements ExchangeClient {
         configBuilder.decoders(decoders);
 
         final List<Class<? extends Encoder>> encoders = new ArrayList<>();
-        encoders.add(SubscriptionEncoder.class);
-        encoders.add(OrderEncoder.class);
         encoders.add(ActionEncoder.class);
         configBuilder.encoders(encoders);
 
@@ -52,9 +49,7 @@ public class BcxClient implements ExchangeClient {
         final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         try {
             session = container.connectToServer(ClientEndpoint.class, config, new URI(BCX_WS_ENDPOINT));
-            final RemoteEndpoint.Basic remote = session.getBasicRemote();
-            remote.sendObject(new Subscribe("subscribe", "auth", apiKey));
-            remote.sendText("{\"action\":\"subscribe\", \"channel\":\"auth\", \"token\": \"" + apiKey + "\"}");
+            send(new SubscribeAuth(apiKey));
             session.addMessageHandler(new MessageHandler.Whole<Event>() {
                 @Override
                 public void onMessage(Event event) {
@@ -113,20 +108,20 @@ public class BcxClient implements ExchangeClient {
     }
 
     public void subscribeAll() {
-        send(new Subscribe("subscribe", "trading"));
-        send(new Subscribe("subscribe", "heartbeat"));
+        send(new Subscribe(Channel.TRADING));
+        send(new Subscribe(Channel.HEARTBEAT));
     }
 
     public void subscribeTrading() {
-        send(new Subscribe("subscribe", "trading"));
+        send(new Subscribe(Channel.TRADING));
     }
 
     public void subscribeHeartbeat() {
-        send(new Subscribe("subscribe", "heartbeat"));
+        send(new Subscribe(Channel.HEARTBEAT));
     }
 
     public void subscribeL2OrderBook(String symbol) {
-        send(new Subscribe("subscribe", "l2", symbol));
+        send(new SubscribeL2(symbol));
     }
 
     public void send(Object message) {
