@@ -9,7 +9,7 @@ public interface ExchangeClient {
     /**
      * Connects to the Exchange
      * @param apiKey API key
-     * @return
+     * @return returns true if connection was successful
      */
     boolean connect(String apiKey);
 
