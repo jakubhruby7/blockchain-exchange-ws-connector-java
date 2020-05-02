@@ -131,6 +131,25 @@ public interface ExchangeClient {
     void subscribeTicker(String symbol, TickerHandler handler);
 
     /**
+     * Subscribes to the trades channel
+     * @param symbol the trading pair
+     */
+    void subscribeTrades(String symbol);
+
+    /**
+     * Subscribes to the trades channel
+     * @param symbol the trading pair
+     * @param handler the trades handler that will be called when the trades event is received
+     */
+    void subscribeTrades(String symbol, TradesHandler handler);
+
+    /**
+     * Handles trades events
+     * @param handler the trades handler that will be called when the trades event is received
+     */
+    void onTrades(TradesHandler handler);
+
+    /**
      * Creates a new order
      * @param clientOrderId
      * @param symbol

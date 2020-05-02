@@ -284,6 +284,20 @@ public class EventExamples {
                 "}";
     }
 
+    static String updatedTrades() {
+        return "{\n" +
+                "  \"seqnum\": 21,\n" +
+                "  \"event\": \"updated\",\n" +
+                "  \"channel\": \"trades\",\n" +
+                "  \"symbol\": \"BTC-USD\",\n" +
+                "  \"timestamp\": \"2019-08-13T11:30:06.100140Z\",\n" +
+                "  \"side\": \"sell\",\n" +
+                "  \"qty\": 8.5E-5,\n" +
+                "  \"price\": 11252.4,\n" +
+                "  \"trade_id\": \"12884909920\"\n" +
+                "}";
+    }
+
     static String snapshotTrading() {
         return "{\n" +
                 "  \"seqnum\": 3,\n" +

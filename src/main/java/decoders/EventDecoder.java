@@ -60,6 +60,9 @@ public class EventDecoder implements Decoder.Text<Event> {
             if (channel == Channel.SYMBOLS) {
                 return fromJson(message, SymbolsSnapshot.class);
             }
+            if (channel == Channel.TRADES) {
+                return fromJson(message, TradesUpdate.class);
+            }
             if (channel == Channel.TRADING) {
                 return fromJson(message, TradingUpdate.class);
             }

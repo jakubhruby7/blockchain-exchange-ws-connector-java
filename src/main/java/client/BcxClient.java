@@ -31,6 +31,7 @@ public class BcxClient implements ExchangeClient {
     private PricesHandler pricesHandler;
     private SymbolsHandler symbolsHandler;
     private TickerHandler tickerHandler;
+    private TradesHandler tradesHandler;
     private OrderUpdateHandler orderUpdateHandler;
 
     public BcxClient() {
@@ -70,6 +71,8 @@ public class BcxClient implements ExchangeClient {
                         handleSymbols((SymbolsSnapshot) event);
                     } else if (event instanceof TickerSnapshot) {
                         handleTicker((TickerSnapshot) event);
+                    } else if (event instanceof TradesUpdate) {
+                        handleTrades((TradesUpdate) event);
                     } else if (event instanceof TradingUpdate) {
                         handleOrderUpdate((TradingUpdate) event);
                     }
@@ -187,6 +190,22 @@ public class BcxClient implements ExchangeClient {
     }
 
     @Override
+    public void subscribeTrades(String symbol) {
+        send(new SubscribeTrades(symbol));
+    }
+
+    @Override
+    public void subscribeTrades(String symbol, TradesHandler handler) {
+        this.tradesHandler = handler;
+        send(new SubscribeTrades(symbol));
+    }
+
+    @Override
+    public void onTrades(TradesHandler handler) {
+        this.tradesHandler = handler;
+    }
+
+    @Override
     public void createOrder(String clientOrderId,
                             String symbol,
                             OrderType orderType,
@@ -273,6 +292,18 @@ public class BcxClient implements ExchangeClient {
         }
         if (eventHandler != null) {
             eventHandler.handle(tickerSnapshot);
+        }
+    }
+
+    private void handleTrades(TradesUpdate tradesUpdate) {
+        if (tradesHandler == null && eventHandler == null) {
+            logger.warn("no trades or event handler is defined");
+        }
+        if (tradesHandler != null) {
+            tradesHandler.handle(tradesUpdate);
+        }
+        if (eventHandler != null) {
+            eventHandler.handle(tradesUpdate);
         }
     }
 

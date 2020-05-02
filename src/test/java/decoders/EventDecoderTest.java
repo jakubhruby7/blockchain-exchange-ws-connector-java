@@ -219,6 +219,22 @@ class EventDecoderTest {
     }
 
     @Test
+    void decodeUpdatedTrades() {
+        Event event = decoder.decode(EventExamples.updatedTrades());
+        assertEquals(TradesUpdate.class, event.getClass());
+
+        TradesUpdate tradesUpdate = (TradesUpdate) event;
+        assertEquals("trades", tradesUpdate.getChannel());
+        assertEquals("updated", tradesUpdate.getEvent());
+        assertEquals("BTC-USD", tradesUpdate.getSymbol());
+        assertEquals("2019-08-13T11:30:06.100140Z", tradesUpdate.getTimestamp());
+        assertEquals(Side.SELL, tradesUpdate.getSide());
+        assertEquals(8.5E-5, tradesUpdate.getQuantity());
+        assertEquals(11252.4, tradesUpdate.getPrice());
+        assertEquals("12884909920", tradesUpdate.getTradeId());
+    }
+
+    @Test
     void decodeSnapshotTrading() {
         Event event = decoder.decode(EventExamples.snapshotTrading());
         assertEquals(TradingSnapshot.class, event.getClass());
