@@ -1,9 +1,6 @@
 package client;
 
-import handlers.EventHandler;
-import handlers.HeartbeatHandler;
-import handlers.L2Handler;
-import handlers.L3Handler;
+import handlers.*;
 import model.OrderType;
 import model.Side;
 import model.TimeInForce;
@@ -87,6 +84,27 @@ public interface ExchangeClient {
      * @param handler the l3 handler that will be called when the l3 event is received
      */
     void onL3(L3Handler handler);
+
+    /**
+     * Subscribes to the prices channel
+     * @param symbol the trading pair
+     * @param granularity the granularity defined in seconds, possible values 60, 300, 900, 3600, 21600, 86400
+     */
+    void subscribePrices(String symbol, int granularity);
+
+    /**
+     * Subscribes to the prices channel
+     * @param symbol the trading pair
+     * @param granularity the granularity defined in seconds, possible values 60, 300, 900, 3600, 21600, 86400
+     * @param handler the prices handler that will be called when the prices event is received
+     */
+    void subscribePrices(String symbol, int granularity, PricesHandler handler);
+
+    /**
+     * Handles prices events
+     * @param handler the prices handler that will be called when the prices event is received
+     */
+    void onPrices(PricesHandler handler);
 
     /**
      * Creates a new order

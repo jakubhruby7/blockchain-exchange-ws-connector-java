@@ -28,6 +28,7 @@ public class BcxClient implements ExchangeClient {
     private HeartbeatHandler heartbeatHandler;
     private L2Handler l2Handler;
     private L3Handler l3Handler;
+    private PricesHandler pricesHandler;
     private OrderUpdateHandler orderUpdateHandler;
 
     public BcxClient() {
@@ -61,6 +62,8 @@ public class BcxClient implements ExchangeClient {
                         handleL2((L2) event);
                     } else if (event instanceof L3) {
                         handleL3((L3) event);
+                    } else if (event instanceof PricesUpdate) {
+                        handlePrices((PricesUpdate) event);
                     } else if (event instanceof TradingUpdate) {
                         handleOrderUpdate((TradingUpdate) event);
                     }
@@ -140,6 +143,22 @@ public class BcxClient implements ExchangeClient {
     }
 
     @Override
+    public void subscribePrices(String symbol, int granularity) {
+        send(new SubscribePrices(symbol, granularity));
+    }
+
+    @Override
+    public void subscribePrices(String symbol, int granularity, PricesHandler handler) {
+        this.pricesHandler = handler;
+        send(new SubscribePrices(symbol, granularity));
+    }
+
+    @Override
+    public void onPrices(PricesHandler handler) {
+        this.pricesHandler = handler;
+    }
+
+    @Override
     public void createOrder(String clientOrderId,
                             String symbol,
                             OrderType orderType,
@@ -190,6 +209,18 @@ public class BcxClient implements ExchangeClient {
         }
         if (eventHandler != null) {
             eventHandler.handle(l3);
+        }
+    }
+
+    private void handlePrices(PricesUpdate pricesUpdate) {
+        if (pricesHandler == null && eventHandler == null) {
+            logger.warn("no prices or event handler is defined");
+        }
+        if (pricesHandler != null) {
+            pricesHandler.handle(pricesUpdate);
+        }
+        if (eventHandler != null) {
+            eventHandler.handle(pricesUpdate);
         }
     }
 
