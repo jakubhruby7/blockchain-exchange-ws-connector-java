@@ -1,16 +1,16 @@
 package model.events;
 
-import model.Ask;
-import model.Bid;
+import model.L3Ask;
+import model.L3Bid;
 
 import java.util.Arrays;
 
-public class L2Update extends Event {
+public class L3 extends Event {
     private String symbol;
-    private Bid[] bids;
-    private Ask[] asks;
+    private L3Bid[] bids;
+    private L3Ask[] asks;
 
-    public L2Update(String seqnum, String event, String channel, String symbol, Bid[] bids, Ask[] asks) {
+    public L3(String seqnum, String event, String channel, String symbol, L3Bid[] bids, L3Ask[] asks) {
         super(seqnum, event, channel);
         this.symbol = symbol;
         this.bids = bids;
@@ -19,7 +19,7 @@ public class L2Update extends Event {
 
     @Override
     public String toString() {
-        return "L2Update{" +
+        return "L3{" +
                 "seqnum='" + seqnum + '\'' +
                 ", event='" + event + '\'' +
                 ", channel='" + channel + '\'' +
@@ -33,11 +33,11 @@ public class L2Update extends Event {
         return symbol;
     }
 
-    public Bid[] getBids() {
+    public L3Bid[] getBids() {
         return bids;
     }
 
-    public Ask[] getAsks() {
+    public L3Ask[] getAsks() {
         return asks;
     }
 }

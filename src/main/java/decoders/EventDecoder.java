@@ -49,10 +49,10 @@ public class EventDecoder implements Decoder.Text<Event> {
                 return fromJson(message, Heartbeat.class);
             }
             if (channel == Channel.L2) {
-                return fromJson(message, L2Update.class);
+                return fromJson(message, L2.class);
             }
             if (channel == Channel.L3) {
-                return fromJson(message, L3Update.class);
+                return fromJson(message, L3.class);
             }
             if (channel == Channel.PRICES) {
                 return fromJson(message, PricesUpdate.class);
@@ -65,10 +65,10 @@ public class EventDecoder implements Decoder.Text<Event> {
             logger.info("rejected: " + s);
         } else if (event == EventName.SNAPSHOT) {
             if (channel == Channel.L2) {
-                return fromJson(message, L2Snapshot.class);
+                return fromJson(message, L2.class);
             }
             if (channel == Channel.L3) {
-                return fromJson(message, L3Snapshot.class);
+                return fromJson(message, L3.class);
             }
             if (channel == Channel.TRADING) {
                 return fromJson(message, TradingSnapshot.class);

@@ -23,6 +23,17 @@ class EventDecoderTest {
     }
 
     @Test
+    void decodeUpdatedHeartbeat() {
+        Event event = decoder.decode(EventExamples.updatedHeartbeat());
+        assertEquals(Heartbeat.class, event.getClass());
+
+        Heartbeat heartbeat = (Heartbeat) event;
+        assertEquals("heartbeat", heartbeat.getChannel());
+        assertEquals("updated", heartbeat.getEvent());
+        assertEquals("2019-05-31T08:36:45.666753Z", heartbeat.getTimestamp());
+    }
+
+    @Test
     void decodeSubscribedL2() {
         Event event = decoder.decode(EventExamples.subsribedL2());
         assertEquals(SubscribedL2.class, event.getClass());
@@ -45,22 +56,11 @@ class EventDecoderTest {
     }
 
     @Test
-    void decodeUpdatedHeartbeat() {
-        Event event = decoder.decode(EventExamples.updatedHeartbeat());
-        assertEquals(Heartbeat.class, event.getClass());
-
-        Heartbeat heartbeat = (Heartbeat) event;
-        assertEquals("heartbeat", heartbeat.getChannel());
-        assertEquals("updated", heartbeat.getEvent());
-        assertEquals("2019-05-31T08:36:45.666753Z", heartbeat.getTimestamp());
-    }
-
-    @Test
     void decodeSnapshotL2() {
         Event event = decoder.decode(EventExamples.snapshotL2());
-        assertEquals(L2Snapshot.class, event.getClass());
+        assertEquals(L2.class, event.getClass());
 
-        L2Snapshot l2Snapshot = (L2Snapshot) event;
+        L2 l2Snapshot = (L2) event;
         assertEquals("l2", l2Snapshot.getChannel());
         assertEquals("snapshot", l2Snapshot.getEvent());
         assertEquals("BTC-USD", l2Snapshot.getSymbol());
@@ -88,26 +88,26 @@ class EventDecoderTest {
     @Test
     void decodeUpdatedL2() {
         Event event = decoder.decode(EventExamples.updatedL2());
-        assertEquals(L2Update.class, event.getClass());
+        assertEquals(L2.class, event.getClass());
 
-        L2Update l2Update = (L2Update) event;
-        assertEquals("l2", l2Update.getChannel());
-        assertEquals("updated", l2Update.getEvent());
-        assertEquals("BTC-USD", l2Update.getSymbol());
-        assertEquals(1, l2Update.getBids().length);
-        assertEquals(0, l2Update.getAsks().length);
+        L2 l2 = (L2) event;
+        assertEquals("l2", l2.getChannel());
+        assertEquals("updated", l2.getEvent());
+        assertEquals("BTC-USD", l2.getSymbol());
+        assertEquals(1, l2.getBids().length);
+        assertEquals(0, l2.getAsks().length);
 
-        assertEquals(1, l2Update.getBids()[0].getNum());
-        assertEquals(8723.45, l2Update.getBids()[0].getPrice());
-        assertEquals(1.1, l2Update.getBids()[0].getQuantity());
+        assertEquals(1, l2.getBids()[0].getNum());
+        assertEquals(8723.45, l2.getBids()[0].getPrice());
+        assertEquals(1.1, l2.getBids()[0].getQuantity());
     }
 
     @Test
     void decodeSnapshotL3() {
         Event event = decoder.decode(EventExamples.snapshotL3());
-        assertEquals(L3Snapshot.class, event.getClass());
+        assertEquals(L3.class, event.getClass());
 
-        L3Snapshot l3Snapshot = (L3Snapshot) event;
+        L3 l3Snapshot = (L3) event;
         assertEquals("l3", l3Snapshot.getChannel());
         assertEquals("snapshot", l3Snapshot.getEvent());
         assertEquals("BTC-USD", l3Snapshot.getSymbol());
@@ -146,17 +146,17 @@ class EventDecoderTest {
     @Test
     void decodeUpdatedL3() {
         Event event = decoder.decode(EventExamples.updatedL3());
-        assertEquals(L3Update.class, event.getClass());
+        assertEquals(L3.class, event.getClass());
 
-        L3Update l3Update = (L3Update) event;
-        assertEquals("l3", l3Update.getChannel());
-        assertEquals("updated", l3Update.getEvent());
-        assertEquals("BTC-USD", l3Update.getSymbol());
-        assertEquals(0, l3Update.getAsks().length);
-        assertEquals(1, l3Update.getBids().length);
-        assertEquals("1234", l3Update.getBids()[0].getId());
-        assertEquals(8723.45, l3Update.getBids()[0].getPrice());
-        assertEquals(0, l3Update.getBids()[0].getQuantity());
+        L3 l3 = (L3) event;
+        assertEquals("l3", l3.getChannel());
+        assertEquals("updated", l3.getEvent());
+        assertEquals("BTC-USD", l3.getSymbol());
+        assertEquals(0, l3.getAsks().length);
+        assertEquals(1, l3.getBids().length);
+        assertEquals("1234", l3.getBids()[0].getId());
+        assertEquals(8723.45, l3.getBids()[0].getPrice());
+        assertEquals(0, l3.getBids()[0].getQuantity());
     }
 
     @Test
