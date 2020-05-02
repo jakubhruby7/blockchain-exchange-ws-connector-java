@@ -118,6 +118,19 @@ public interface ExchangeClient {
     void subscribeSymbols(SymbolsHandler handler);
 
     /**
+     * Subscribes to the ticker channel
+     * @param symbol the trading pair
+     */
+    void subscribeTicker(String symbol);
+
+    /**
+     * Subscribes to the ticker channel
+     * @param symbol the trading pair
+     * @param handler the ticker handler that will be called when the ticker snapshot is received
+     */
+    void subscribeTicker(String symbol, TickerHandler handler);
+
+    /**
      * Creates a new order
      * @param clientOrderId
      * @param symbol

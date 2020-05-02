@@ -205,8 +205,17 @@ class EventDecoderTest {
     }
 
     @Test
-    void decodeUpdateSymbols() {
-        Event event = decoder.decode(EventExamples.updateSymbols());
+    void decodeSnapshotTicker() {
+        Event event = decoder.decode(EventExamples.snapshotTicker());
+        assertEquals(TickerSnapshot.class, event.getClass());
+
+        TickerSnapshot tickerSnapshot = (TickerSnapshot) event;
+        assertEquals("ticker", tickerSnapshot.getChannel());
+        assertEquals("snapshot", tickerSnapshot.getEvent());
+        assertEquals("BTC-USD", tickerSnapshot.getSymbol());
+        assertEquals(4988.0, tickerSnapshot.getPrices24h());
+        assertEquals(0.3015, tickerSnapshot.getVolume24h());
+        assertEquals(5000.0, tickerSnapshot.getLastTradePrice());
     }
 
     @Test

@@ -30,6 +30,7 @@ public class BcxClient implements ExchangeClient {
     private L3Handler l3Handler;
     private PricesHandler pricesHandler;
     private SymbolsHandler symbolsHandler;
+    private TickerHandler tickerHandler;
     private OrderUpdateHandler orderUpdateHandler;
 
     public BcxClient() {
@@ -67,6 +68,8 @@ public class BcxClient implements ExchangeClient {
                         handlePrices((PricesUpdate) event);
                     } else if (event instanceof SymbolsSnapshot) {
                         handleSymbols((SymbolsSnapshot) event);
+                    } else if (event instanceof TickerSnapshot) {
+                        handleTicker((TickerSnapshot) event);
                     } else if (event instanceof TradingUpdate) {
                         handleOrderUpdate((TradingUpdate) event);
                     }
@@ -173,6 +176,17 @@ public class BcxClient implements ExchangeClient {
     }
 
     @Override
+    public void subscribeTicker(String symbol) {
+        send(new SubscribeTicker(symbol));
+    }
+
+    @Override
+    public void subscribeTicker(String symbol, TickerHandler handler) {
+        this.tickerHandler = handler;
+        send(new SubscribeTicker(symbol));
+    }
+
+    @Override
     public void createOrder(String clientOrderId,
                             String symbol,
                             OrderType orderType,
@@ -247,6 +261,18 @@ public class BcxClient implements ExchangeClient {
         }
         if (eventHandler != null) {
             eventHandler.handle(symbolsSnapshot);
+        }
+    }
+
+    private void handleTicker(TickerSnapshot tickerSnapshot) {
+        if (tickerHandler == null && eventHandler == null) {
+            logger.warn("no ticker or event handler is defined");
+        }
+        if (tickerHandler != null) {
+            tickerHandler.handle(tickerSnapshot);
+        }
+        if (eventHandler != null) {
+            eventHandler.handle(tickerSnapshot);
         }
     }
 

@@ -272,17 +272,15 @@ public class EventExamples {
                 "}";
     }
 
-    static String updateSymbols() {
+    static String snapshotTicker() {
         return "{\n" +
-                "  \"seqnum\": 1,\n" +
-                "  \"event\": \"updated\",\n" +
-                "  \"channel\": \"symbols\",\n" +
+                "  \"seqnum\": 8,\n" +
+                "  \"event\": \"snapshot\",\n" +
+                "  \"channel\": \"ticker\",\n" +
                 "  \"symbol\": \"BTC-USD\",\n" +
-                "  \"auction-price\": 0,\n" +
-                "  \"auction-size\": 0,\n" +
-                "  \"auction-time\": \"\",\n" +
-                "  \"imbalance\": 0,\n" +
-                "  \"status\": \"open\"\n" +
+                "  \"price_24h\": 4988.0,\n" +
+                "  \"volume_24h\": 0.3015,\n" +
+                "  \"last_trade_price\": 5000.0\n" +
                 "}";
     }
 
