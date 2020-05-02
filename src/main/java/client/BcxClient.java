@@ -32,6 +32,7 @@ public class BcxClient implements ExchangeClient {
     private SymbolsHandler symbolsHandler;
     private TickerHandler tickerHandler;
     private TradesHandler tradesHandler;
+    private BalancesHandler balancesHandler;
     private OrderUpdateHandler orderUpdateHandler;
 
     public BcxClient() {
@@ -73,6 +74,8 @@ public class BcxClient implements ExchangeClient {
                         handleTicker((TickerSnapshot) event);
                     } else if (event instanceof TradesUpdate) {
                         handleTrades((TradesUpdate) event);
+                    } else if (event instanceof BalancesSnapshot) {
+                        handleBalances((BalancesSnapshot) event);
                     } else if (event instanceof TradingUpdate) {
                         handleOrderUpdate((TradingUpdate) event);
                     }
@@ -206,6 +209,22 @@ public class BcxClient implements ExchangeClient {
     }
 
     @Override
+    public void subscribeBalances() {
+        send(new Subscribe(Channel.BALANCES));
+    }
+
+    @Override
+    public void subscribeBalances(BalancesHandler handler) {
+        this.balancesHandler = handler;
+        send(new Subscribe(Channel.BALANCES));
+    }
+
+    @Override
+    public void onBalances(BalancesHandler handler) {
+        this.balancesHandler = handler;
+    }
+
+    @Override
     public void createOrder(String clientOrderId,
                             String symbol,
                             OrderType orderType,
@@ -304,6 +323,18 @@ public class BcxClient implements ExchangeClient {
         }
         if (eventHandler != null) {
             eventHandler.handle(tradesUpdate);
+        }
+    }
+
+    private void handleBalances(BalancesSnapshot balancesSnapshot) {
+        if (balancesHandler == null && eventHandler == null) {
+            logger.warn("no balances or event handler is defined");
+        }
+        if (balancesHandler != null) {
+            balancesHandler.handle(balancesSnapshot);
+        }
+        if (eventHandler != null) {
+            eventHandler.handle(balancesSnapshot);
         }
     }
 

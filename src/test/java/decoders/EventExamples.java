@@ -298,6 +298,42 @@ public class EventExamples {
                 "}";
     }
 
+    static String snapshotBalances() {
+        return "{\n" +
+                "  \"seqnum\": 2,\n" +
+                "  \"event\": \"snapshot\",\n" +
+                "  \"channel\": \"balances\",\n" +
+                "  \"balances\": [\n" +
+                "    {\n" +
+                "      \"currency\": \"BTC\",\n" +
+                "      \"balance\": 0.00366963,\n" +
+                "      \"available\": 0.00266963,\n" +
+                "      \"balance_local\": 38.746779155,\n" +
+                "      \"available_local\": 28.188009155,\n" +
+                "      \"rate\": 10558.77\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"currency\": \"USD\",\n" +
+                "      \"balance\": 11.66,\n" +
+                "      \"available\": 0.0,\n" +
+                "      \"balance_local\": 11.66,\n" +
+                "      \"available_local\": 0.0,\n" +
+                "      \"rate\": 1.0\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"currency\": \"ETH\",\n" +
+                "      \"balance\": 0.18115942,\n" +
+                "      \"available\": 0.18115942,\n" +
+                "      \"balance_local\": 37.289855013,\n" +
+                "      \"available_local\": 37.289855013,\n" +
+                "      \"rate\": 205.84\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"total_available_local\": 65.477864168,\n" +
+                "  \"total_balance_local\": 87.696634168\n" +
+                "}";
+    }
+
     static String snapshotTrading() {
         return "{\n" +
                 "  \"seqnum\": 3,\n" +

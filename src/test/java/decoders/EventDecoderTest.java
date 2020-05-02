@@ -235,6 +235,39 @@ class EventDecoderTest {
     }
 
     @Test
+    void decodeSnapshotBalances() {
+        Event event = decoder.decode(EventExamples.snapshotBalances());
+        assertEquals(BalancesSnapshot.class, event.getClass());
+
+        BalancesSnapshot balancesSnapshot = (BalancesSnapshot) event;
+        assertEquals("balances", balancesSnapshot.getChannel());
+        assertEquals("snapshot", balancesSnapshot.getEvent());
+        assertEquals(87.696634168, balancesSnapshot.getTotalBalanceLocal());
+        assertEquals(65.477864168, balancesSnapshot.getTotalAvailableLocal());
+
+        assertEquals("BTC", balancesSnapshot.getBalances()[0].getCurrency());
+        assertEquals(0.00366963, balancesSnapshot.getBalances()[0].getBalance());
+        assertEquals(0.00266963, balancesSnapshot.getBalances()[0].getAvailable());
+        assertEquals(38.746779155, balancesSnapshot.getBalances()[0].getBalanceLocal());
+        assertEquals(28.188009155, balancesSnapshot.getBalances()[0].getAvailableLocal());
+        assertEquals(10558.77, balancesSnapshot.getBalances()[0].getRate());
+
+        assertEquals("USD", balancesSnapshot.getBalances()[1].getCurrency());
+        assertEquals(11.66, balancesSnapshot.getBalances()[1].getBalance());
+        assertEquals(0.0, balancesSnapshot.getBalances()[1].getAvailable());
+        assertEquals(11.66, balancesSnapshot.getBalances()[1].getBalanceLocal());
+        assertEquals(0.0, balancesSnapshot.getBalances()[1].getAvailableLocal());
+        assertEquals(1.0, balancesSnapshot.getBalances()[1].getRate());
+
+        assertEquals("ETH", balancesSnapshot.getBalances()[2].getCurrency());
+        assertEquals(0.18115942, balancesSnapshot.getBalances()[2].getBalance());
+        assertEquals(0.18115942, balancesSnapshot.getBalances()[2].getAvailable());
+        assertEquals(37.289855013, balancesSnapshot.getBalances()[2].getBalanceLocal());
+        assertEquals(37.289855013, balancesSnapshot.getBalances()[2].getAvailableLocal());
+        assertEquals(205.84, balancesSnapshot.getBalances()[2].getRate());
+    }
+
+    @Test
     void decodeSnapshotTrading() {
         Event event = decoder.decode(EventExamples.snapshotTrading());
         assertEquals(TradingSnapshot.class, event.getClass());

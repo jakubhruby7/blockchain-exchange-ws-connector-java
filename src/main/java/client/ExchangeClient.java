@@ -150,6 +150,23 @@ public interface ExchangeClient {
     void onTrades(TradesHandler handler);
 
     /**
+     * Subscribes to the balances channel
+     */
+    void subscribeBalances();
+
+    /**
+     * Subscribes to the balances channel
+     * @param handler the balances handler that will be called when the balances snapshot is received
+     */
+    void subscribeBalances(BalancesHandler handler);
+
+    /**
+     * Handles balances snapshots
+     * @param handler the balances handler that will be called when the balances snapshot is received
+     */
+    void onBalances(BalancesHandler handler);
+
+    /**
      * Creates a new order
      * @param clientOrderId
      * @param symbol
