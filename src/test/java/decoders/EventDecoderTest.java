@@ -45,17 +45,6 @@ class EventDecoderTest {
     }
 
     @Test
-    void decodeSubscribedPrices() {
-        Event event = decoder.decode(EventExamples.subscribedPrices());
-        assertEquals(SubscribedPrices.class, event.getClass());
-
-        SubscribedPrices subscribed = (SubscribedPrices) event;
-        assertEquals("prices", subscribed.getChannel());
-        assertEquals("subscribed", subscribed.getEvent());
-        assertEquals("BTC-USD", subscribed.getSymbol());
-    }
-
-    @Test
     void decodeSnapshotL2() {
         Event event = decoder.decode(EventExamples.snapshotL2());
         assertEquals(L2.class, event.getClass());
@@ -160,6 +149,17 @@ class EventDecoderTest {
     }
 
     @Test
+    void decodeSubscribedPrices() {
+        Event event = decoder.decode(EventExamples.subscribedPrices());
+        assertEquals(SubscribedPrices.class, event.getClass());
+
+        SubscribedPrices subscribed = (SubscribedPrices) event;
+        assertEquals("prices", subscribed.getChannel());
+        assertEquals("subscribed", subscribed.getEvent());
+        assertEquals("BTC-USD", subscribed.getSymbol());
+    }
+
+    @Test
     void decodeUpdatedPrices() {
         Event event = decoder.decode(EventExamples.updatedPrices());
         assertEquals(PricesUpdate.class, event.getClass());
@@ -173,6 +173,40 @@ class EventDecoderTest {
         assertEquals(8697.27, pricesUpdate.getPrice()[3]);
         assertEquals(8700.98, pricesUpdate.getPrice()[4]);
         assertEquals(0.431, pricesUpdate.getPrice()[5]);
+    }
+
+    @Test
+    void decodeSnapshotSymbols() {
+        Event event = decoder.decode(EventExamples.snapshotSymbols());
+        assertEquals(SymbolsSnapshot.class, event.getClass());
+
+        SymbolsSnapshot symbolsSnapshot = (SymbolsSnapshot) event;
+        assertEquals("symbols", symbolsSnapshot.getChannel());
+        assertEquals("snapshot", symbolsSnapshot.getEvent());
+        assertEquals(5, symbolsSnapshot.getSymbols().size());
+        assertEquals("BTC", symbolsSnapshot.getSymbols().get("BTC-USD").getBaseCurrency());
+        assertEquals(8, symbolsSnapshot.getSymbols().get("BTC-USD").getBaseCurrencyScale());
+        assertEquals("USD", symbolsSnapshot.getSymbols().get("BTC-USD").getCounterCurrency());
+        assertEquals(2, symbolsSnapshot.getSymbols().get("BTC-USD").getCounterCurrencyScale());
+        assertEquals(10, symbolsSnapshot.getSymbols().get("BTC-USD").getMinPriceIncrement());
+        assertEquals(0, symbolsSnapshot.getSymbols().get("BTC-USD").getMinPriceIncrementScale());
+        assertEquals(50, symbolsSnapshot.getSymbols().get("BTC-USD").getMinOrderSize());
+        assertEquals(2, symbolsSnapshot.getSymbols().get("BTC-USD").getMinOrderSizeScale());
+        assertEquals(0, symbolsSnapshot.getSymbols().get("BTC-USD").getMaxOrderSize());
+        assertEquals(8, symbolsSnapshot.getSymbols().get("BTC-USD").getMaxOrderSizeScale());
+        assertEquals(5, symbolsSnapshot.getSymbols().get("BTC-USD").getLotSize());
+        assertEquals(2, symbolsSnapshot.getSymbols().get("BTC-USD").getLotSizeScale());
+        assertEquals("halt", symbolsSnapshot.getSymbols().get("BTC-USD").getStatus());
+        assertEquals(1, symbolsSnapshot.getSymbols().get("BTC-USD").getId());
+        assertEquals(0.0, symbolsSnapshot.getSymbols().get("BTC-USD").getAuctionPrice());
+        assertEquals(0.0, symbolsSnapshot.getSymbols().get("BTC-USD").getAuctionSize());
+        assertEquals("", symbolsSnapshot.getSymbols().get("BTC-USD").getAuctionTime());
+        assertEquals(0.0, symbolsSnapshot.getSymbols().get("BTC-USD").getImbalance());
+    }
+
+    @Test
+    void decodeUpdateSymbols() {
+        Event event = decoder.decode(EventExamples.updateSymbols());
     }
 
     @Test

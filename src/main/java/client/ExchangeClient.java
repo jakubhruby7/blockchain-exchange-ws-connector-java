@@ -107,6 +107,17 @@ public interface ExchangeClient {
     void onPrices(PricesHandler handler);
 
     /**
+     * Subscribes to the symbols channel
+     */
+    void subscribeSymbols();
+
+    /**
+     * Subscribes to the symbols channel
+     * @param handler the symbols handler that will be called when the symbols snapshot is received
+     */
+    void subscribeSymbols(SymbolsHandler handler);
+
+    /**
      * Creates a new order
      * @param clientOrderId
      * @param symbol

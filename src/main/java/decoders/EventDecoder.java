@@ -57,6 +57,9 @@ public class EventDecoder implements Decoder.Text<Event> {
             if (channel == Channel.PRICES) {
                 return fromJson(message, PricesUpdate.class);
             }
+            if (channel == Channel.SYMBOLS) {
+                return fromJson(message, SymbolsSnapshot.class);
+            }
             if (channel == Channel.TRADING) {
                 return fromJson(message, TradingUpdate.class);
             }
@@ -69,6 +72,9 @@ public class EventDecoder implements Decoder.Text<Event> {
             }
             if (channel == Channel.L3) {
                 return fromJson(message, L3.class);
+            }
+            if (channel == Channel.SYMBOLS) {
+                return fromJson(message, SymbolsSnapshot.class);
             }
             if (channel == Channel.TRADING) {
                 return fromJson(message, TradingSnapshot.class);

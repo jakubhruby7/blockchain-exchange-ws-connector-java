@@ -29,6 +29,7 @@ public class BcxClient implements ExchangeClient {
     private L2Handler l2Handler;
     private L3Handler l3Handler;
     private PricesHandler pricesHandler;
+    private SymbolsHandler symbolsHandler;
     private OrderUpdateHandler orderUpdateHandler;
 
     public BcxClient() {
@@ -55,7 +56,7 @@ public class BcxClient implements ExchangeClient {
             session.addMessageHandler(new MessageHandler.Whole<Event>() {
                 @Override
                 public void onMessage(Event event) {
-                    logger.debug("new event: " + event.toString());
+                    logger.info("new event: " + event.toString());
                     if (event instanceof Heartbeat) {
                         handleHeartbeat((Heartbeat) event);
                     } else if (event instanceof L2) {
@@ -64,6 +65,8 @@ public class BcxClient implements ExchangeClient {
                         handleL3((L3) event);
                     } else if (event instanceof PricesUpdate) {
                         handlePrices((PricesUpdate) event);
+                    } else if (event instanceof SymbolsSnapshot) {
+                        handleSymbols((SymbolsSnapshot) event);
                     } else if (event instanceof TradingUpdate) {
                         handleOrderUpdate((TradingUpdate) event);
                     }
@@ -159,6 +162,17 @@ public class BcxClient implements ExchangeClient {
     }
 
     @Override
+    public void subscribeSymbols() {
+        send(new Subscribe(Channel.SYMBOLS));
+    }
+
+    @Override
+    public void subscribeSymbols(SymbolsHandler handler) {
+        this.symbolsHandler = handler;
+        send(new Subscribe(Channel.SYMBOLS));
+    }
+
+    @Override
     public void createOrder(String clientOrderId,
                             String symbol,
                             OrderType orderType,
@@ -221,6 +235,18 @@ public class BcxClient implements ExchangeClient {
         }
         if (eventHandler != null) {
             eventHandler.handle(pricesUpdate);
+        }
+    }
+
+    private void handleSymbols(SymbolsSnapshot symbolsSnapshot) {
+        if (symbolsHandler == null && eventHandler == null) {
+            logger.warn("no symbols or event handler is defined");
+        }
+        if (symbolsHandler != null) {
+            symbolsHandler.handle(symbolsSnapshot);
+        }
+        if (eventHandler != null) {
+            eventHandler.handle(symbolsSnapshot);
         }
     }
 

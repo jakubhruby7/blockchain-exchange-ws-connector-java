@@ -162,6 +162,130 @@ public class EventExamples {
                 "}";
     }
 
+    static String snapshotSymbols() {
+        return "{\n" +
+                "  \"seqnum\": 1,\n" +
+                "  \"event\": \"snapshot\",\n" +
+                "  \"channel\": \"symbols\",\n" +
+                "  \"symbols\": {\n" +
+                "    \"BTC-USD\": {\n" +
+                "      \"base_currency\": \"BTC\",\n" +
+                "      \"base_currency_scale\": 8,\n" +
+                "      \"counter_currency\": \"USD\",\n" +
+                "      \"counter_currency_scale\": 2,\n" +
+                "      \"min_price_increment\": 10,\n" +
+                "      \"min_price_increment_scale\": 0,\n" +
+                "      \"min_order_size\": 50,\n" +
+                "      \"min_order_size_scale\": 2,\n" +
+                "      \"max_order_size\": 0,\n" +
+                "      \"max_order_size_scale\": 8,\n" +
+                "      \"lot_size\": 5,\n" +
+                "      \"lot_size_scale\": 2,\n" +
+                "      \"status\": \"halt\",\n" +
+                "      \"id\": 1,\n" +
+                "      \"auction_price\": 0.0,\n" +
+                "      \"auction_size\": 0.0,\n" +
+                "      \"auction_time\": \"\",\n" +
+                "      \"imbalance\": 0.0\n" +
+                "    },\n" +
+                "    \"ETH-BTC\": {\n" +
+                "      \"base_currency\": \"ETH\",\n" +
+                "      \"base_currency_scale\": 8,\n" +
+                "      \"counter_currency\": \"BTC\",\n" +
+                "      \"counter_currency_scale\": 8,\n" +
+                "      \"min_price_increment\": 100,\n" +
+                "      \"min_price_increment_scale\": 8,\n" +
+                "      \"min_order_size\": 220001,\n" +
+                "      \"min_order_size_scale\": 8,\n" +
+                "      \"max_order_size\": 0,\n" +
+                "      \"max_order_size_scale\": 8,\n" +
+                "      \"lot_size\": 0,\n" +
+                "      \"lot_size_scale\": 0,\n" +
+                "      \"status\": \"open\",\n" +
+                "      \"id\": 3,\n" +
+                "      \"auction_price\": 0.0,\n" +
+                "      \"auction_size\": 0.0,\n" +
+                "      \"auction_time\": \"\",\n" +
+                "      \"imbalance\": 0.0\n" +
+                "    },\n" +
+                "    \"BTC-EUR\": {\n" +
+                "      \"base_currency\": \"BTC\",\n" +
+                "      \"base_currency_scale\": 8,\n" +
+                "      \"counter_currency\": \"EUR\",\n" +
+                "      \"counter_currency_scale\": 2,\n" +
+                "      \"min_price_increment\": 10,\n" +
+                "      \"min_price_increment_scale\": 0,\n" +
+                "      \"min_order_size\": 50,\n" +
+                "      \"min_order_size_scale\": 2,\n" +
+                "      \"max_order_size\": 0,\n" +
+                "      \"max_order_size_scale\": 0,\n" +
+                "      \"lot_size\": 0,\n" +
+                "      \"lot_size_scale\": 0,\n" +
+                "      \"status\": \"closed\",\n" +
+                "      \"id\": 4,\n" +
+                "      \"auction_price\": 0.0,\n" +
+                "      \"auction_size\": 0.0,\n" +
+                "      \"auction_time\": \"\",\n" +
+                "      \"imbalance\": 0.0\n" +
+                "    },\n" +
+                "    \"ETH-EUR\": {\n" +
+                "      \"base_currency\": \"ETH\",\n" +
+                "      \"base_currency_scale\": 8,\n" +
+                "      \"counter_currency\": \"EUR\",\n" +
+                "      \"counter_currency_scale\": 2,\n" +
+                "      \"min_price_increment\": 10,\n" +
+                "      \"min_price_increment_scale\": 0,\n" +
+                "      \"min_order_size\": 50,\n" +
+                "      \"min_order_size_scale\": 2,\n" +
+                "      \"max_order_size\": 500,\n" +
+                "      \"max_order_size_scale\": 2,\n" +
+                "      \"lot_size\": 0,\n" +
+                "      \"lot_size_scale\": 0,\n" +
+                "      \"status\": \"open\",\n" +
+                "      \"id\": 5,\n" +
+                "      \"auction_price\": 0.0,\n" +
+                "      \"auction_size\": 0.0,\n" +
+                "      \"auction_time\": \"\",\n" +
+                "      \"imbalance\": 0.0\n" +
+                "    },\n" +
+                "    \"ETH-USD\": {\n" +
+                "      \"base_currency\": \"ETH\",\n" +
+                "      \"base_currency_scale\": 8,\n" +
+                "      \"counter_currency\": \"USD\",\n" +
+                "      \"counter_currency_scale\": 2,\n" +
+                "      \"min_price_increment\": 5,\n" +
+                "      \"min_price_increment_scale\": 0,\n" +
+                "      \"min_order_size\": 50,\n" +
+                "      \"min_order_size_scale\": 2,\n" +
+                "      \"max_order_size\": 0,\n" +
+                "      \"max_order_size_scale\": 0,\n" +
+                "      \"lot_size\": 0,\n" +
+                "      \"lot_size_scale\": 0,\n" +
+                "      \"status\": \"open\",\n" +
+                "      \"id\": 2,\n" +
+                "      \"auction_price\": 0.0,\n" +
+                "      \"auction_size\": 0.0,\n" +
+                "      \"auction_time\": \"\",\n" +
+                "      \"imbalance\": 0.0\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+    }
+
+    static String updateSymbols() {
+        return "{\n" +
+                "  \"seqnum\": 1,\n" +
+                "  \"event\": \"updated\",\n" +
+                "  \"channel\": \"symbols\",\n" +
+                "  \"symbol\": \"BTC-USD\",\n" +
+                "  \"auction-price\": 0,\n" +
+                "  \"auction-size\": 0,\n" +
+                "  \"auction-time\": \"\",\n" +
+                "  \"imbalance\": 0,\n" +
+                "  \"status\": \"open\"\n" +
+                "}";
+    }
+
     static String snapshotTrading() {
         return "{\n" +
                 "  \"seqnum\": 3,\n" +
