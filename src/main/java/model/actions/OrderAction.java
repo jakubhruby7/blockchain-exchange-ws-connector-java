@@ -6,8 +6,6 @@ import model.OrderType;
 import model.Side;
 import model.TimeInForce;
 
-import java.math.BigDecimal;
-
 public class OrderAction extends Action {
 
     @SerializedName("clOrdID")
@@ -17,8 +15,8 @@ public class OrderAction extends Action {
     private final OrderType orderType;
     private final TimeInForce timeInForce;
     private final Side side;
-    private final BigDecimal orderQty;
-    private final BigDecimal price;
+    private final double orderQty;
+    private final double price;
     private final boolean addLiquidityOnly;
 
 
@@ -28,8 +26,8 @@ public class OrderAction extends Action {
             OrderType orderType,
             TimeInForce timeInForce,
             Side side,
-            BigDecimal orderQty,
-            BigDecimal price,
+            double orderQty,
+            double price,
             boolean addLiquidityOnly
     ) {
         this.action = ActionType.NEW_ORDER_SINGLE;

@@ -3,7 +3,8 @@ package client;
 import config.ClientConfig;
 import decoders.EventDecoder;
 import encoders.ActionEncoder;
-import handlers.Handler;
+import handlers.EventHandler;
+import handlers.HeartbeatHandler;
 import handlers.OrderUpdateHandler;
 import model.Channel;
 import model.OrderType;
@@ -16,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.websocket.*;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,9 @@ public class BcxClient implements ExchangeClient {
     private final Logger logger = LoggerFactory.getLogger(BcxClient.class);
     private final ClientEndpointConfig config;
     private Session session;
-    private Handler heartbeatHandler;
-    private Handler l2UpdateHandler;
+    private EventHandler eventHandler;
+    private HeartbeatHandler heartbeatHandler;
+    private EventHandler l2UpdateHandler;
     private OrderUpdateHandler orderUpdateHandler;
 
     public BcxClient() {
@@ -45,6 +46,7 @@ public class BcxClient implements ExchangeClient {
         config = configBuilder.build();
     }
 
+    @Override
     public boolean connect(String apiKey) {
         final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         try {
@@ -73,13 +75,26 @@ public class BcxClient implements ExchangeClient {
     }
 
     @Override
+    public void subscribeAll() {
+        send(new Subscribe(Channel.TRADING));
+        send(new Subscribe(Channel.HEARTBEAT));
+    }
+
+    @Override
+    public void subscribeAll(EventHandler eventHandler) {
+        this.eventHandler = eventHandler;
+        send(new Subscribe(Channel.TRADING));
+        send(new Subscribe(Channel.HEARTBEAT));
+    }
+
+    @Override
     public void createOrder(String clientOrderId,
                             String symbol,
                             OrderType orderType,
                             TimeInForce timeInForce,
                             Side side,
-                            BigDecimal orderQty,
-                            BigDecimal price,
+                            double orderQty,
+                            double price,
                             boolean addLiquidityOnly
     ) {
         send(new OrderAction(clientOrderId, symbol, orderType, timeInForce, side, orderQty, price, addLiquidityOnly));
@@ -100,23 +115,33 @@ public class BcxClient implements ExchangeClient {
     }
 
     private void handleHeartbeat(Heartbeat heartbeat) {
-        heartbeatHandler.handle(heartbeat);
+        if (heartbeatHandler == null && eventHandler == null) {
+            logger.warn("no heartbeat or event handler is defined");
+        }
+        if (heartbeatHandler != null) {
+            heartbeatHandler.handle(heartbeat);
+        }
+        if (eventHandler != null) {
+            eventHandler.handle(heartbeat);
+        }
     }
 
     private void handleOrderUpdate(TradingUpdate update) {
         orderUpdateHandler.handle(update);
     }
 
-    public void subscribeAll() {
-        send(new Subscribe(Channel.TRADING));
-        send(new Subscribe(Channel.HEARTBEAT));
-    }
-
     public void subscribeTrading() {
         send(new Subscribe(Channel.TRADING));
     }
 
+    @Override
     public void subscribeHeartbeat() {
+        send(new Subscribe(Channel.HEARTBEAT));
+    }
+
+    @Override
+    public void subscribeHeartbeat(HeartbeatHandler handler) {
+        this.heartbeatHandler = handler;
         send(new Subscribe(Channel.HEARTBEAT));
     }
 
@@ -133,11 +158,12 @@ public class BcxClient implements ExchangeClient {
         }
     }
 
-    public void onHeartbeat(Handler handler) {
+    @Override
+    public void onHeartbeat(HeartbeatHandler handler) {
         this.heartbeatHandler = handler;
     }
 
-    public void onL2OrderBookUpdate(Handler handler) {
+    public void onL2OrderBookUpdate(EventHandler handler) {
         this.l2UpdateHandler = handler;
     }
 

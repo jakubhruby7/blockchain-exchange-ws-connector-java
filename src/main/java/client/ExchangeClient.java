@@ -1,10 +1,10 @@
 package client;
 
+import handlers.EventHandler;
+import handlers.HeartbeatHandler;
 import model.OrderType;
 import model.Side;
 import model.TimeInForce;
-
-import java.math.BigDecimal;
 
 public interface ExchangeClient {
     /**
@@ -13,6 +13,34 @@ public interface ExchangeClient {
      * @return
      */
     boolean connect(String apiKey);
+
+    /**
+     * Subscribes to all channels
+     */
+    void subscribeAll();
+
+    /**
+     * Subscribes to all channels
+     * @param handler the handler that will be called when the event is received
+     */
+    void subscribeAll(EventHandler handler);
+
+    /**
+     * Subscribes to the heartbeat channel
+     */
+    void subscribeHeartbeat();
+
+    /**
+     * Subscribes to the heartbeat channel
+     * @param handler the heartbeat handler that will be called when the heartbeat event is received
+     */
+    void subscribeHeartbeat(HeartbeatHandler handler);
+
+    /**
+     * Handles heartbeat events
+     * @param handler the heartbeat handler that will be called when the heartbeat event is received
+     */
+    void onHeartbeat(HeartbeatHandler handler);
 
     /**
      * Creates a new order
@@ -31,8 +59,8 @@ public interface ExchangeClient {
             OrderType orderType,
             TimeInForce timeInForce,
             Side side,
-            BigDecimal orderQty,
-            BigDecimal price,
+            double  orderQty,
+            double price,
             boolean addLiquidityOnly
     );
 
