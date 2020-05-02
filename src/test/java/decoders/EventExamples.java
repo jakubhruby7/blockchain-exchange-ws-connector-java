@@ -387,4 +387,16 @@ public class EventExamples {
                 "  \"avgPx\": 0.0\n" +
                 "}";
     }
+
+    static String rejectedTrading() {
+        return "{\n" +
+                "  \"seqnum\": 5,\n" +
+                "  \"event\": \"rejected\",\n" +
+                "  \"channel\": \"trading\",\n" +
+                "  \"text\": \"Invalid price\",\n" +
+                "  \"clOrdID\": \"Client ID 3\",\n" +
+                "  \"ordStatus\": \"rejected\",\n" +
+                "  \"action\": \"NewOrderSingle\"\n" +
+                "}";
+    }
 }

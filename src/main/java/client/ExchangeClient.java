@@ -167,15 +167,58 @@ public interface ExchangeClient {
     void onBalances(BalancesHandler handler);
 
     /**
+     * Subscribes to the trading channel
+     */
+    void subscribeTrading();
+
+    /**
+     * Subscribes to the trading channel
+     * @param handler the trading handler that will be called when the trading event is received
+     */
+    void subscribeTrading(TradingHandler handler);
+
+    /**
+     * Subscribes to the trading channel
+     * @param snapshotHandler the trading handler that will be called when the trading snapshot is received
+     * @param updateHandler the trading handler that will be called when the trading update is received
+     * @param rejectHandler the trading handler that will be called when the trading rejection is received
+     */
+    void subscribeTrading(TradingSnapshotHandler snapshotHandler, TradingUpdateHandler updateHandler, TradingRejectedHandler rejectHandler);
+
+    /**
+     * Handles trading events
+     * @param handler the trading handler that will be called when the trading event is received
+     */
+    void onTrading(TradingHandler handler);
+
+    /**
+     * Handles trading snapshot events
+     * @param handler the trading handler that will be called when the trading snapshot is received
+     */
+    void onTradingSnapshot(TradingSnapshotHandler handler);
+
+    /**
+     * Handles trading update events
+     * @param handler the trading handler that will be called when the trading update is received
+     */
+    void onTradingUpdate(TradingUpdateHandler handler);
+
+    /**
+     * Handles trading reject events
+     * @param handler the trading handler that will be called when the trading rejection is received
+     */
+    void onTradingReject(TradingRejectedHandler handler);
+
+    /**
      * Creates a new order
-     * @param clientOrderId
-     * @param symbol
-     * @param orderType
-     * @param timeInForce
-     * @param side
-     * @param orderQty
-     * @param price
-     * @param addLiquidityOnly
+     * @param clientOrderId the client order id
+     * @param symbol the trading pair
+     * @param orderType the order type LIMIT, MARKET
+     * @param timeInForce the time in force, for example GTC
+     * @param side the side BUY, SELL
+     * @param orderQty the order quantity
+     * @param price the order price
+     * @param addLiquidityOnly the liquidity only indicator
      */
     void createOrder(
             String clientOrderId,
@@ -190,7 +233,7 @@ public interface ExchangeClient {
 
     /**
      * Cancels an order
-     * @param orderId
+     * @param orderId the order id to be cancelled
      */
     void cancelOrder(String orderId);
 }

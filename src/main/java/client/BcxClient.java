@@ -33,7 +33,10 @@ public class BcxClient implements ExchangeClient {
     private TickerHandler tickerHandler;
     private TradesHandler tradesHandler;
     private BalancesHandler balancesHandler;
-    private OrderUpdateHandler orderUpdateHandler;
+    private TradingHandler tradingHandler;
+    private TradingSnapshotHandler tradingSnapshotHandler;
+    private TradingUpdateHandler tradingUpdateHandler;
+    private TradingRejectedHandler tradingRejectedHandler;
 
     public BcxClient() {
         final ClientEndpointConfig.Builder configBuilder = ClientEndpointConfig.Builder.create();
@@ -76,8 +79,8 @@ public class BcxClient implements ExchangeClient {
                         handleTrades((TradesUpdate) event);
                     } else if (event instanceof BalancesSnapshot) {
                         handleBalances((BalancesSnapshot) event);
-                    } else if (event instanceof TradingUpdate) {
-                        handleOrderUpdate((TradingUpdate) event);
+                    } else if (event instanceof TradingEvent) {
+                        handleTrading((TradingEvent) event);
                     }
                 }
             });
@@ -338,12 +341,65 @@ public class BcxClient implements ExchangeClient {
         }
     }
 
-    private void handleOrderUpdate(TradingUpdate update) {
-        orderUpdateHandler.handle(update);
+    private void handleTrading(TradingEvent tradingEvent) {
+        if (tradingHandler == null && eventHandler == null
+                || (tradingSnapshotHandler == null && tradingUpdateHandler == null && tradingRejectedHandler == null)) {
+            logger.warn("no trading or event handler is defined");
+        }
+        if (tradingHandler != null) {
+            tradingHandler.handle(tradingEvent);
+        }
+        if (tradingSnapshotHandler != null && tradingEvent instanceof TradingSnapshot) {
+            tradingSnapshotHandler.handle((TradingSnapshot) tradingEvent);
+        }
+        if (tradingUpdateHandler != null && tradingEvent instanceof TradingUpdate) {
+            tradingUpdateHandler.handle((TradingUpdate) tradingEvent);
+        }
+        if (tradingRejectedHandler != null && tradingEvent instanceof TradingRejected) {
+            tradingRejectedHandler.handle((TradingRejected) tradingEvent);
+        }
+        if (eventHandler != null) {
+            eventHandler.handle(tradingEvent);
+        }
     }
 
+    @Override
     public void subscribeTrading() {
         send(new Subscribe(Channel.TRADING));
+    }
+
+    @Override
+    public void subscribeTrading(TradingHandler handler) {
+        this.tradingHandler = handler;
+        send(new Subscribe(Channel.TRADING));
+    }
+
+    @Override
+    public void subscribeTrading(TradingSnapshotHandler snapshotHandler, TradingUpdateHandler updateHandler, TradingRejectedHandler rejectHandler) {
+        this.tradingSnapshotHandler = snapshotHandler;
+        this.tradingUpdateHandler = updateHandler;
+        this.tradingRejectedHandler = rejectHandler;
+        send(new Subscribe(Channel.TRADING));
+    }
+
+    @Override
+    public void onTrading(TradingHandler handler) {
+        this.tradingHandler = handler;
+    }
+
+    @Override
+    public void onTradingSnapshot(TradingSnapshotHandler handler) {
+        this.tradingSnapshotHandler = handler;
+    }
+
+    @Override
+    public void onTradingUpdate(TradingUpdateHandler handler) {
+        this.tradingUpdateHandler = handler;
+    }
+
+    @Override
+    public void onTradingReject(TradingRejectedHandler handler) {
+        this.tradingRejectedHandler = handler;
     }
 
     public void send(Object message) {
@@ -353,9 +409,5 @@ public class BcxClient implements ExchangeClient {
         } catch (IOException | EncodeException e) {
             e.printStackTrace();
         }
-    }
-
-    public void onOrderUpdate(OrderUpdateHandler handler) {
-        this.orderUpdateHandler = handler;
     }
 }

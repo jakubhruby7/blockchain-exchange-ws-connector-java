@@ -67,7 +67,9 @@ public class EventDecoder implements Decoder.Text<Event> {
                 return fromJson(message, TradingUpdate.class);
             }
         } else if (event == EventName.REJECTED) {
-            //TODO handle rejected
+            if (channel == Channel.TRADING) {
+                return fromJson(message, TradingRejected.class);
+            }
             logger.info("rejected: " + s);
         } else if (event == EventName.SNAPSHOT) {
             if (channel == Channel.L2) {

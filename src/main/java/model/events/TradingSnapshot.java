@@ -4,7 +4,7 @@ import model.Order;
 
 import java.util.Arrays;
 
-public class TradingSnapshot extends Event {
+public class TradingSnapshot extends TradingEvent {
     private Order[] orders;
 
     public TradingSnapshot(String seqnum, String event, String channel, Order[] orders) {

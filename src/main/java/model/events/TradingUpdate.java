@@ -5,7 +5,7 @@ import model.OrderType;
 import model.Side;
 import model.TimeInForce;
 
-public class TradingUpdate extends Event {
+public class TradingUpdate extends TradingEvent {
 
     @SerializedName("orderID")
     private String orderId;

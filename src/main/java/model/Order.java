@@ -51,32 +51,6 @@ public class Order {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId='" + orderId + '\'' +
-                ", clientOrderId='" + clientOrderId + '\'' +
-                ", symbol='" + symbol + '\'' +
-                ", side=" + side +
-                ", orderType=" + orderType +
-                ", orderQty=" + orderQty +
-                ", leavesQty=" + leavesQty +
-                ", cumQty=" + cumQty +
-                ", avgPx=" + avgPx +
-                ", ordStatus='" + ordStatus + '\'' +
-                ", timeInForce=" + timeInForce +
-                ", text='" + text + '\'' +
-                ", execType='" + execType + '\'' +
-                ", execId='" + execId + '\'' +
-                ", transactTime='" + transactTime + '\'' +
-                ", msgType=" + msgType +
-                ", lastPx=" + lastPx +
-                ", lastShares=" + lastShares +
-                ", tradeId='" + tradeId + '\'' +
-                ", price=" + price +
-                '}';
-    }
-
     public String getOrderId() {
         return orderId;
     }
@@ -155,5 +129,31 @@ public class Order {
 
     public double getPrice() {
         return price;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId='" + orderId + '\'' +
+                ", clientOrderId='" + clientOrderId + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", side=" + side +
+                ", orderType=" + orderType +
+                ", orderQty=" + orderQty +
+                ", leavesQty=" + leavesQty +
+                ", cumQty=" + cumQty +
+                ", avgPx=" + avgPx +
+                ", ordStatus='" + ordStatus + '\'' +
+                ", timeInForce=" + timeInForce +
+                ", text='" + text + '\'' +
+                ", execType='" + execType + '\'' +
+                ", execId='" + execId + '\'' +
+                ", transactTime='" + transactTime + '\'' +
+                ", msgType=" + msgType +
+                ", lastPx=" + lastPx +
+                ", lastShares=" + lastShares +
+                ", tradeId='" + tradeId + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

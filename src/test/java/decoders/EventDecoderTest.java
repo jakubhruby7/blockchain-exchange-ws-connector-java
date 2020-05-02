@@ -308,4 +308,18 @@ class EventDecoderTest {
         assertEquals("999999878", tradingUpdate.getOrderId());
         assertEquals("Client ID 3", tradingUpdate.getClientOrderId());
     }
+
+    @Test
+    void decodeRejectedTrading() {
+        Event event = decoder.decode(EventExamples.rejectedTrading());
+        assertEquals(TradingRejected.class, event.getClass());
+
+        TradingRejected tradingRejected = (TradingRejected) event;
+        assertEquals("trading", tradingRejected.getChannel());
+        assertEquals("rejected", tradingRejected.getEvent());
+        assertEquals("Invalid price", tradingRejected.getText());
+        assertEquals("Client ID 3", tradingRejected.getClientOrderId());
+        assertEquals("rejected", tradingRejected.getOrdStatus());
+        assertEquals("NewOrderSingle", tradingRejected.getAction());
+    }
 }
