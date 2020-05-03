@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Ask {
     @SerializedName("px")
-    private double price;
+    private String price;
     @SerializedName("qty")
-    private double quantity;
-    private double num;
+    private String quantity;
+    private String num;
 
-    public Ask(double price, double quantity, double num) {
+    public Ask(String price, String quantity, String num) {
         this.price = price;
         this.quantity = quantity;
         this.num = num;
@@ -24,15 +24,15 @@ public class Ask {
                 '}';
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public double getNum() {
+    public String getNum() {
         return num;
     }
 }

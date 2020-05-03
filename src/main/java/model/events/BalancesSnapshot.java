@@ -8,9 +8,9 @@ import java.util.Arrays;
 public class BalancesSnapshot extends Event {
     private Balance[] balances;
     @SerializedName("total_available_local")
-    private double totalAvailableLocal;
+    private String totalAvailableLocal;
     @SerializedName("total_balance_local")
-    private double totalBalanceLocal;
+    private String totalBalanceLocal;
 
     public BalancesSnapshot(String seqnum, String event, String channel) {
         super(seqnum, event, channel);
@@ -20,11 +20,11 @@ public class BalancesSnapshot extends Event {
         return balances;
     }
 
-    public double getTotalAvailableLocal() {
+    public String getTotalAvailableLocal() {
         return totalAvailableLocal;
     }
 
-    public double getTotalBalanceLocal() {
+    public String getTotalBalanceLocal() {
         return totalBalanceLocal;
     }
 

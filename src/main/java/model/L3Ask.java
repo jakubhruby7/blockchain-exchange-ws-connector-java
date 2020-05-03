@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class L3Ask {
     @SerializedName("px")
-    private double price;
+    private String price;
     @SerializedName("qty")
-    private double quantity;
+    private String quantity;
     private String id;
 
-    public L3Ask(double price, double quantity, String id) {
+    public L3Ask(String price, String quantity, String id) {
         this.price = price;
         this.quantity = quantity;
         this.id = id;
@@ -24,11 +24,11 @@ public class L3Ask {
                 '}';
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 

@@ -4,35 +4,35 @@ import com.google.gson.annotations.SerializedName;
 
 public class Balance {
     private String currency;
-    private double balance;
-    private double available;
+    private String balance;
+    private String available;
     @SerializedName("balance_local")
-    private double balanceLocal;
+    private String balanceLocal;
     @SerializedName("available_local")
-    private double availableLocal;
-    private double rate;
+    private String availableLocal;
+    private String rate;
 
     public String getCurrency() {
         return currency;
     }
 
-    public double getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public double getAvailable() {
+    public String getAvailable() {
         return available;
     }
 
-    public double getBalanceLocal() {
+    public String getBalanceLocal() {
         return balanceLocal;
     }
 
-    public double getAvailableLocal() {
+    public String getAvailableLocal() {
         return availableLocal;
     }
 
-    public double getRate() {
+    public String getRate() {
         return rate;
     }
 

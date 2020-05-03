@@ -15,10 +15,10 @@ public class TradingUpdate extends TradingEvent {
     private Side side;
     @SerializedName("ordType")
     private OrderType orderType;
-    private double orderQty;
-    private double leavesQty;
-    private double cumQty;
-    private double avgPx;
+    private String orderQty;
+    private String leavesQty;
+    private String cumQty;
+    private String avgPx;
     private String ordStatus;
     private TimeInForce timeInForce;
     private String text;
@@ -27,10 +27,10 @@ public class TradingUpdate extends TradingEvent {
     private String execId;
     private String transactTime;
     private int msgType;
-    private double lastPx;
-    private double lastShares;
+    private String lastPx;
+    private String lastShares;
     private String tradeId;
-    private double price;
+    private String price;
 
     public TradingUpdate(String seqnum, String event, String channel, String orderId, String clientOrderId, String symbol) {
         super(seqnum, event, channel);
@@ -71,19 +71,19 @@ public class TradingUpdate extends TradingEvent {
         return orderType;
     }
 
-    public double getOrderQty() {
+    public String getOrderQty() {
         return orderQty;
     }
 
-    public double getLeavesQty() {
+    public String getLeavesQty() {
         return leavesQty;
     }
 
-    public double getCumQty() {
+    public String getCumQty() {
         return cumQty;
     }
 
-    public double getAvgPx() {
+    public String getAvgPx() {
         return avgPx;
     }
 
@@ -115,11 +115,11 @@ public class TradingUpdate extends TradingEvent {
         return msgType;
     }
 
-    public double getLastPx() {
+    public String getLastPx() {
         return lastPx;
     }
 
-    public double getLastShares() {
+    public String getLastShares() {
         return lastShares;
     }
 
@@ -127,7 +127,7 @@ public class TradingUpdate extends TradingEvent {
         return tradeId;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 }

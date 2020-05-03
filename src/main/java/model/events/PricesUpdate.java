@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class PricesUpdate extends Event {
     private String symbol;
-    private double[] price;
+    private String[] price;
 
-    public PricesUpdate(String seqnum, String event, String channel, String symbol, double[] price) {
+    public PricesUpdate(String seqnum, String event, String channel, String symbol, String[] price) {
         super(seqnum, event, channel);
         this.symbol = symbol;
         this.price = price;
@@ -23,7 +23,7 @@ public class PricesUpdate extends Event {
                 '}';
     }
 
-    public double[] getPrice() {
+    public String[] getPrice() {
         return price;
     }
 }

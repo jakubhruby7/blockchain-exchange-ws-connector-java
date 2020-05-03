@@ -15,8 +15,8 @@ public class OrderAction extends Action {
     private final OrderType orderType;
     private final TimeInForce timeInForce;
     private final Side side;
-    private final double orderQty;
-    private final double price;
+    private final String orderQty;
+    private final String price;
     private final boolean addLiquidityOnly;
 
 
@@ -26,8 +26,8 @@ public class OrderAction extends Action {
             OrderType orderType,
             TimeInForce timeInForce,
             Side side,
-            double orderQty,
-            double price,
+            String orderQty,
+            String price,
             boolean addLiquidityOnly
     ) {
         this.action = ActionType.NEW_ORDER_SINGLE;

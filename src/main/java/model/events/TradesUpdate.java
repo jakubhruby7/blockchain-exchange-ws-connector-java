@@ -8,8 +8,8 @@ public class TradesUpdate extends Event {
     private String timestamp;
     private Side side;
     @SerializedName("qty")
-    private double quantity;
-    private double price;
+    private String quantity;
+    private String price;
     @SerializedName("trade_id")
     private String tradeId;
 
@@ -29,11 +29,11 @@ public class TradesUpdate extends Event {
         return side;
     }
 
-    public double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 

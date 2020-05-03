@@ -233,8 +233,8 @@ public class BcxClient implements ExchangeClient {
                             OrderType orderType,
                             TimeInForce timeInForce,
                             Side side,
-                            double orderQty,
-                            double price,
+                            String orderQty,
+                            String price,
                             boolean addLiquidityOnly
     ) {
         send(new OrderAction(clientOrderId, symbol, orderType, timeInForce, side, orderQty, price, addLiquidityOnly));

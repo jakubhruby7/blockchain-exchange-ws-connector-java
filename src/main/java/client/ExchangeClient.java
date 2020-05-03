@@ -226,8 +226,8 @@ public interface ExchangeClient {
             OrderType orderType,
             TimeInForce timeInForce,
             Side side,
-            double  orderQty,
-            double price,
+            String  orderQty,
+            String price,
             boolean addLiquidityOnly
     );
 

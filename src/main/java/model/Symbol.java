@@ -32,13 +32,13 @@ public class Symbol {
     @SerializedName("id")
     private int id;
     @SerializedName("auction_price")
-    private double auctionPrice;
+    private String auctionPrice;
     @SerializedName("auction_size")
-    private double auctionSize;
+    private String auctionSize;
     @SerializedName("auction_time")
     private String auctionTime;
     @SerializedName("imbalance")
-    private double imbalance;
+    private String imbalance;
 
     public String getBaseCurrency() {
         return baseCurrency;
@@ -96,11 +96,11 @@ public class Symbol {
         return id;
     }
 
-    public double getAuctionPrice() {
+    public String getAuctionPrice() {
         return auctionPrice;
     }
 
-    public double getAuctionSize() {
+    public String getAuctionSize() {
         return auctionSize;
     }
 
@@ -108,7 +108,7 @@ public class Symbol {
         return auctionTime;
     }
 
-    public double getImbalance() {
+    public String getImbalance() {
         return imbalance;
     }
 }

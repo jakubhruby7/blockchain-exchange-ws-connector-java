@@ -8,11 +8,11 @@ import java.util.Map;
 public class TickerSnapshot extends Event {
     private String symbol;
     @SerializedName("price_24h")
-    private double prices24h;
+    private String prices24h;
     @SerializedName("volume_24h")
-    private double volume24h;
+    private String volume24h;
     @SerializedName("last_trade_price")
-    private double lastTradePrice;
+    private String lastTradePrice;
 
     public TickerSnapshot(String seqnum, String event, String channel) {
         super(seqnum, event, channel);
@@ -22,15 +22,15 @@ public class TickerSnapshot extends Event {
         return symbol;
     }
 
-    public double getPrices24h() {
+    public String getPrices24h() {
         return prices24h;
     }
 
-    public double getVolume24h() {
+    public String getVolume24h() {
         return volume24h;
     }
 
-    public double getLastTradePrice() {
+    public String getLastTradePrice() {
         return lastTradePrice;
     }
 

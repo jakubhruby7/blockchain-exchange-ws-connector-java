@@ -11,10 +11,10 @@ public class Order {
     private Side side;
     @SerializedName("ordType")
     private OrderType orderType;
-    private double orderQty;
-    private double leavesQty;
-    private double cumQty;
-    private double avgPx;
+    private String orderQty;
+    private String leavesQty;
+    private String cumQty;
+    private String avgPx;
     private String ordStatus;
     private TimeInForce timeInForce;
     private String text;
@@ -23,12 +23,12 @@ public class Order {
     private String execId;
     private String transactTime;
     private int msgType;
-    private double lastPx;
-    private double lastShares;
+    private String lastPx;
+    private String lastShares;
     private String tradeId;
-    private double price;
+    private String price;
 
-    public Order(String orderId, String clientOrderId, String symbol, Side side, OrderType orderType, double orderQty, double leavesQty, double cumQty, double avgPx, String ordStatus, TimeInForce timeInForce, String text, String execType, String execId, String transactTime, int msgType, double lastPx, double lastShares, String tradeId, double price) {
+    public Order(String orderId, String clientOrderId, String symbol, Side side, OrderType orderType, String orderQty, String leavesQty, String cumQty, String avgPx, String ordStatus, TimeInForce timeInForce, String text, String execType, String execId, String transactTime, int msgType, String lastPx, String lastShares, String tradeId, String price) {
         this.orderId = orderId;
         this.clientOrderId = clientOrderId;
         this.symbol = symbol;
@@ -71,19 +71,19 @@ public class Order {
         return orderType;
     }
 
-    public double getOrderQty() {
+    public String getOrderQty() {
         return orderQty;
     }
 
-    public double getLeavesQty() {
+    public String getLeavesQty() {
         return leavesQty;
     }
 
-    public double getCumQty() {
+    public String getCumQty() {
         return cumQty;
     }
 
-    public double getAvgPx() {
+    public String getAvgPx() {
         return avgPx;
     }
 
@@ -115,11 +115,11 @@ public class Order {
         return msgType;
     }
 
-    public double getLastPx() {
+    public String getLastPx() {
         return lastPx;
     }
 
-    public double getLastShares() {
+    public String getLastShares() {
         return lastShares;
     }
 
@@ -127,7 +127,7 @@ public class Order {
         return tradeId;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
