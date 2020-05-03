@@ -39,7 +39,7 @@ Connect to the exchange with your API key (you can generate one on https://excha
 This section describes all the available websocket channels.   
 Full description of each channel - https://exchange.blockchain.com/api/#websocket-api
 ### All
-You can connect to all channel by using the following command 
+You can connect to all channels that do not require extra parameters (heartbeat, trading, balances, symbol) by using the following command 
   
    ```bcxClient.subscribeAll();```
 
