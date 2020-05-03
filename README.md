@@ -1,7 +1,33 @@
 ## Blockchain.com Exchange Websocket Client
 Websocket connector for Blockchain.com Exchange (https://exchange.blockchain.com) written in Java.
 
+Features
+* Create market and limit orders 
+* Cancel orders
+* Get order status updates
+* Subscribe to balances
+* Subscribe to market data
+* Subscribe to symbol reference data
+* Subscribe to candlestick updates
+* Subscribe to trades (trades across the exchange)
+* Subscribe to ticker (24h volume, 24h price, last traded price)
+* Subscribe to heartbeat (heartbeat messages)
+
 ## How to get started
+
+To build the project
+
+`./gradlew clean build`
+
+This will create a jar under `build/libs` that can be used in your project (I'm working on adding a dependency to Maven Central, so it's easier to start using it)
+
+To run the example (`com.blockchain.bxc.Example`)  
+
+`./gradlew runExample`
+
+To fully run the example you'll have to generate your API key and have USD balance (more than $5) on the exchange. You can modify the example before running.
+
+## Usage
 First create a client instance  
 ``final BcxClient bcxClient = new BcxClient();``  
   
