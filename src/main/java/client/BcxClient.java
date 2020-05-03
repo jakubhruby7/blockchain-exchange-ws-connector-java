@@ -93,8 +93,10 @@ public class BcxClient implements ExchangeClient {
 
     @Override
     public void subscribeAll() {
-        send(new Subscribe(Channel.TRADING));
         send(new Subscribe(Channel.HEARTBEAT));
+        send(new Subscribe(Channel.TRADING));
+        send(new Subscribe(Channel.BALANCES));
+        send(new Subscribe(Channel.SYMBOLS));
     }
 
     @Override
