@@ -247,6 +247,11 @@ public class BcxClient implements ExchangeClient {
         send(new CancelAction(orderId));
     }
 
+    @Override
+    public void cancelAllOrders() {
+        send(new BulkCancelAction());
+    }
+
     private void handleHeartbeat(Heartbeat heartbeat) {
         if (heartbeatHandler == null && eventHandler == null) {
             logger.warn("no heartbeat or event handler is defined");

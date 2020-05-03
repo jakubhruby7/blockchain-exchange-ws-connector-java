@@ -236,4 +236,9 @@ public interface ExchangeClient {
      * @param orderId the order id to be cancelled
      */
     void cancelOrder(String orderId);
+
+    /**
+     * Cancels multiple orders
+     */
+    void cancelAllOrders();
 }

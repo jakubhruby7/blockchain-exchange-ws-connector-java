@@ -8,5 +8,7 @@ enum ActionType {
     @SerializedName("NewOrderSingle")
     NEW_ORDER_SINGLE,
     @SerializedName("CancelOrderRequest")
-    CANCEL_ORDER_REQUEST;
+    CANCEL_ORDER_REQUEST,
+    @SerializedName("OrderMassCancelRequest")
+    ORDER_MASS_CANCEL_REQUEST;
 }

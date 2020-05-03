@@ -4,6 +4,7 @@ Websocket connector for Blockchain.com Exchange (https://exchange.blockchain.com
 Features
 * Create market and limit orders 
 * Cancel orders
+* Cancel all orders
 * Get order status updates
 * Subscribe to balances
 * Subscribe to market data
@@ -233,6 +234,11 @@ You can cancel an existing order in the following way
 `bcxClient.cancelOrder("123");`
 
 Passed parameter is an order id that is received after placing a new order.
+
+#### Cancelling all orders
+You can cancel all of your open orders in the following way
+
+`bcxClient.cancelAllOrders()`
 
 ### Balances
 Balances channel is used for receiving balance snapshot events (`BalanceSnapshot`) from the exchange.   
