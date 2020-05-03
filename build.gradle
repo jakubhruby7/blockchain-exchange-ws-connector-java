@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-group 'com.jakubhruby'
+group 'com.blockchain'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -26,10 +26,15 @@ dependencies {
     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0'
 }
 
+ext {
+    javaMainClass = "com.blockchain.bcx.Example"
+}
+
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
-                'Implementation-Version': project.version)
+                'Implementation-Version': project.version,
+                "Main-Class": javaMainClass)
     }
 }
 
@@ -46,6 +51,13 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives sourceJar
     archives javadocJar
+}
+
+task runExample(type: Exec) {
+    dependsOn build
+    group = "Execution"
+    description = "Run the main class with ExecTask"
+    commandLine "java", "-classpath", sourceSets.main.runtimeClasspath.getAsPath(), javaMainClass
 }
 
 publishing {
